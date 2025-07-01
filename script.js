@@ -70,6 +70,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const navButtons = document.querySelectorAll('.nav-btn');
     const projectCards = document.querySelectorAll('.project-card');
+    const langButtons = document.querySelectorAll('.lang-btn');
+    let currentLang = 'en';
+    const setLanguage = (lang) => {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+
+        langButtons.forEach(button => {
+            if (button.dataset.lang === lang) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('[data-en], [data-ru]').forEach(element => {
+            const text = element.dataset[lang];
+            if (text) {
+                element.textContent = text;
+            }
+        });
+    };
 
     const showInitialProjects = () => {
         projectCards.forEach(card => {
@@ -94,5 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    langButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            setLanguage(button.dataset.lang);
+        });
+    });
+
+    setLanguage(currentLang);
     showInitialProjects();
 });

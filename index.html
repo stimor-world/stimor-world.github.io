@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои Проекты</title>
+    <title>My Projects</title>
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -12,28 +12,107 @@
 
     <div class="container">
         <header>
-            <h1>Stimor</h1>
-            <p>Портфолио разработчика и мечтателя</p>
+            <h1 data-en="Stimor" data-ru="Stimor">Stimor</h1>
+            <p data-en="Developer & Dreamer Portfolio" data-ru="Портфолио разработчика и мечтателя">Developer & Dreamer Portfolio</p>
         </header>
 
+        <div class="language-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="ru">RU</button>
+        </div>
+
         <nav>
-            <button class="nav-btn active" data-filter="all">Все</button>
-            <button class="nav-btn" data-filter="games">Games</button>
-            <button class="nav-btn" data-filter="love2d">Love2d</button>
-            <button class="nav-btn" data-filter="solar2d">Solar 2D</button>
-            <button class="nav-btn" data-filter="other">Other</button>
+            <button class="nav-btn active" data-filter="all" data-en="All" data-ru="Все">All</button>
+            <button class="nav-btn" data-filter="games" data-en="Games" data-ru="Игры">Games</button>
+            <button class="nav-btn" data-filter="love2d" data-en="Love2d" data-ru="Love2d">Love2d</button>
+            <button class="nav-btn" data-filter="solar2d" data-en="Solar 2D" data-ru="Solar 2D">Solar 2D</button>
+            <button class="nav-btn" data-filter="other" data-en="Other" data-ru="Другое">Other</button>
         </nav>
 
         <main id="projects-container">
             <div class="project-card" data-category="love2d">
                 <div class="project-content">
-                    <h3>Bito8</h3>
-                    <p>Библиотека ретро-графики для LÖVE.</p>
-                    <a href="bito8.html" class="project-link">Перейти</a>
+                    <h3 data-en="Bito8" data-ru="Bito8">Bito8</h3>
+                    <p data-en="A retro graphics library for LÖVE." data-ru="Библиотека ретро-графики для LÖVE.">A retro graphics library for LÖVE.</p>
+                    <a href="bito8.html" class="project-link" data-en="View Project" data-ru="Перейти">View Project</a>
                 </div>
             </div>
 
-            </main>
+            <div class="project-card" data-category="love2d">
+                <div class="project-content">
+                    <h3 data-en="Mane 2d" data-ru="Mane 2d">Mane 2d</h3>
+                    <p data-en="My game framework on Love 2d." data-ru="Мой игровой фреймворк на Love 2d.">My game framework on Love 2d.</p>
+                    <a href="https://mane-docs.vercel.app/" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="love2d">
+                <div class="project-content">
+                    <h3 data-en="Pcnia" data-ru="Pcnia">Pcnia</h3>
+                    <p data-en="My computer and operating system simulator on Love 2d." data-ru="Мой симулятор компьютера и операционной системы на Love 2d.">My computer and operating system simulator on Love 2d.</p>
+                    <a href="https://github.com/Max-Dil/Pcnia" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="games">
+                <div class="project-content">
+                    <h3 data-en="Platuna" data-ru="Platuna">Platuna</h3>
+                    <p data-en="A platformer with special controls made on Mane 2d in Love." data-ru="Платформер с особым управлением, сделанный на Mane 2d в Love.">Платформер с особым управлением, сделанный на Mane 2d в Love.</p>
+                    <a href="https://github.com/Max-Dil/Platuna" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="solar2d">
+                <div class="project-content">
+                    <h3 data-en="Solar TS 2d" data-ru="Solar TS 2d">My Typescript to Lua port for Solar 2d</h3>
+                    <p data-en="My Typescript to Lua port for Solar 2d." data-ru="Мой порт Typescript to Lua для Solar 2d.">My Typescript to Lua port for Solar 2d.</p>
+                    <a href="https://github.com/Max-Dil/Solar-TS-2d" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="solar2d">
+                <div class="project-content">
+                    <h3 data-en="Cyan" data-ru="Cyan">Cyan</h3>
+                    <p data-en="My programming language compiled to Lua." data-ru="Мой язык программирования, компилируемый в Lua.">My programming language compiled to Lua.</p>
+                    <a href="https://github.com/Max-Dil/Cyan" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="solar2d">
+                <div class="project-content">
+                    <h3 data-en="low-2d" data-ru="lox-2s">low-2d</h3>
+                    <p data-en="My simple game framework for Solar 2d." data-ru="Мой простой игровой фреймворк для Solar 2d.">My simple game framework for Solar 2d.</p>
+                    <a href="https://github.com/Max-Dil/low-2d" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="solar2d">
+                <div class="project-content">
+                    <h3 data-en="Mane 2d (Constructor)" data-ru="Mane 2d (Конструктор)">Mane 2d (Конструктор)</h3>
+                    <p data-en="Game and application constructor for phones with a node system." data-ru="Конструктор игр и приложений на телефон с системой нодов.">Конструктор игр и приложений на телефон с системой нодов.</p>
+                    <a href="https://www.rustore.ru/catalog/app/com.solar2d.app.Mane_2dv2" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="other">
+                <div class="project-content">
+                    <h3 data-en="miLo" data-ru="miLo">miLo</h3>
+                    <p data-en="A simple engine based on Mane 2d architecture, but for the browser and my language - xylo." data-ru="Простой движок на архитектуре Mane 2d, но для браузера и моего языка - xylo.">Простой движок на архитектуре Mane 2d, но для браузера и моего языка - xylo.</p>
+                    <a href="https://github.com/Max-Dil/miLo" class="project-link" target="_blank" data-en="View Project" data-ru="Перейти">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="other">
+                <div class="project-content">
+                    <h3 data-en="Xylo" data-ru="Xylo">Xylo</h3>
+                    <p data-en="My programming language written entirely in JS, for browser and Node.js." data-ru="Мой язык программирования, написанный целиком на JS, для браузера и Node.js.">Мой язык программирования, написанный целиком на JS, для браузера и Node.js.</p>
+                    <a href="https://xylo-docs.vercel.app/" class="project-link" target="_blank" data-en="Xylo Documentation" data-ru="Документация Xylo">Xylo Documentation</a>
+                    <a href="https://xylo-obsuficator.vercel.app/" class="project-link" target="_blank" data-en="Obfuscator, Minifier, Deobfuscator (beta)" data-ru="Обфускатор, минификатор, деобфускатор (бета)">Obfuscator, Minifier, Deobfuscator (beta)</a>
+                    <a href="https://xylo-online.vercel.app/" class="project-link" target="_blank" data-en="Xylo Online Code Execution Site" data-ru="Сайт онлайн выполнения кода Xylo">Xylo Online Code Execution Site</a>
+                    <a href="https://github.com/Xylo-corparation/xylo-language" class="project-link" target="_blank" data-en="GitHub" data-ru="GitHub">GitHub</a>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>

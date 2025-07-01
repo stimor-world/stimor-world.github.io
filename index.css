@@ -23,6 +23,10 @@ body {
     z-index: -1;
 }
 
+a {
+    margin-bottom: 5px;
+}
+
 .container {
     position: relative;
     z-index: 1;
@@ -49,6 +53,32 @@ header p {
     font-size: 1.2rem;
     color: var(--text-color);
     opacity: 0.8;
+}
+
+.language-switcher {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.lang-btn {
+    font-family: var(--font-family);
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px var(--glow-color), inset 0 0 5px var(--glow-color);
+}
+
+.lang-btn:hover, .lang-btn.active {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 15px var(--glow-color);
 }
 
 nav {
@@ -95,7 +125,7 @@ nav {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: scaleIn 0.5s ease-out;
     animation-fill-mode: backwards;
-    display: none;
+    display: none; /* Hidden by default, shown by JS */
 }
 
 .project-card.visible {
@@ -140,7 +170,7 @@ nav {
     transform: scale(1.1);
 }
 
-/* Ключевые кадры для анимаций */
+/* Keyframes for animations */
 @keyframes fadeInDown {
     from {
         opacity: 0;
