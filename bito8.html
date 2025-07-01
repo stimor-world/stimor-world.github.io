@@ -304,92 +304,143 @@ a:not(nav a):hover {
 
             <hr>
 
-            <section id="api">
-                <h2 data-en="API Reference" data-ru="Справочник API"></h2>
+<section id="api">
+    <h2 data-en="API Reference" data-ru="Справочник API"></h2>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.draw()</h3>
-                    <p data-en="Draws everything that you have created. This should be called at the end of your `love.draw()` function." data-ru="Отрисовывает все, что вы создали. Эту функцию следует вызывать в конце вашей функции `love.draw()`."></p>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.setColor(r, g, b)</h3>
+        <p data-en="Sets the current drawing color." data-ru="Устанавливает текущий цвет рисования."></p>
+        <pre><code class="lua">-- Set color to red
+graphics.setColor(255, 0, 0)</code></pre>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.imageConvertor(path)</h3>
-                    <p data-en="Converts an image to a bito8 image. Returns `imageData` that can be used with `bito8.graphics.drawImage()`." data-ru="Конвертирует изображение в формат bito8. Возвращает `imageData`, которые можно использовать с `bito8.graphics.drawImage()`."></p>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.scale(scale_factor)</h3>
+        <p data-en="Sets the current scale factor for drawing operations." data-ru="Устанавливает текущий масштаб для операций рисования."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.setSize(width, height)</h3>
-                    <p data-en="Sets the size of the monitor. Default: 400, 300." data-ru="Устанавливает размер монитора. По умолчанию: 400, 300."></p>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.rotate(angle)</h3>
+        <p data-en="Sets the current rotation angle (in radians) for drawing operations." data-ru="Устанавливает текущий угол поворота (в радианах) для операций рисования."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.grphics.clear(r, g, b)</h3>
-                    <p data-en="Clears the screen with the specified RGB color (values 0-255)." data-ru="Очищает экран указанным RGB-цветом (значения 0-255)."></p>
-                    <pre><code class="lua">-- Example: Clear screen with dark purple
-bito8.graphics.clear(50, 0, 100)</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.push()</h3>
+        <p data-en="Pushes the current drawing state (color, scale, angle) onto the stack." data-ru="Сохраняет текущее состояние рисования (цвет, масштаб, угол) в стек."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">Color Parameters</h3>
-                    <p data-en="All drawing functions accept color as either a table or separate RGB values (0-255):" data-ru="Все функции рисования принимают цвет либо как таблицу, либо как отдельные RGB-значения (0-255):"></p>
-                    <pre><code class="lua">-- As a table
-local color = {255, 100, 50}
+    <div class="api-item">
+        <h3 class="function-name">graphics.pop()</h3>
+        <p data-en="Pops the drawing state from the stack, restoring previous settings." data-ru="Восстанавливает предыдущее состояние рисования из стека."></p>
+    </div>
 
--- As separate values
-local r, g, b = 255, 100, 50</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.pixel(x, y)</h3>
+        <p data-en="Draws a pixel at the specified coordinates using current color." data-ru="Рисует пиксель по указанным координатам текущим цветом."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.graphics.drawPixel(x, y, color)</h3>
-                    <p data-en="Draws a pixel at the specified coordinates with the given color." data-ru="Рисует пиксель по указанным координатам заданным цветом."></p>
-                    <pre><code class="lua">-- Draw red pixel at (10, 20)
-bito8.graphics.drawPixel(10, 20, {255, 0, 0})</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.line(x1, y1, x2, y2)</h3>
+        <p data-en="Draws a line between two points using current color and transformations." data-ru="Рисует линию между двумя точками с текущим цветом и преобразованиями."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.graphics.drawLine(x1, y1, x2, y2, color)</h3>
-                    <p data-en="Draws a line from (x1, y1) to (x2, y2) with the given color." data-ru="Рисует линию из (x1, y1) в (x2, y2) заданным цветом."></p>
-                    <pre><code class="lua">-- Draw green line
-bito8.graphics.drawLine(0, 0, 100, 100, {0, 255, 0})</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.clear(r, g, b)</h3>
+        <p data-en="Clears the screen with specified color (default black)." data-ru="Очищает экран указанным цветом (по умолчанию черный)."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.graphics.drawImage(x, y, imageData, scale)</h3>
-                    <p data-en="Draws a bito8 image at the specified coordinates." data-ru="Рисует изображение bito8 по указанным координатам."></p>
-                    <pre><code class="lua">-- Load and draw image
-local image = bito8.imageConvertor("assets/sprite.png")
-bito8.graphics.drawImage(50, 50, image, 1)</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.circle(x, y, radius, filled)</h3>
+        <p data-en="Draws a circle at (x,y) with given radius. If filled is true, draws a filled circle." data-ru="Рисует круг в точке (x,y) с заданным радиусом. Если filled=true, рисует закрашенный круг."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.graphics.drawRectangle(x, y, width, height, color, isFulled)</h3>
-                    <p data-en="Draws a rectangle at the specified coordinates with the given width, height and color." data-ru="Рисует прямоугольник по указанным координатам с заданной шириной, высотой и цветом."></p>
-                    <pre><code class="lua">-- Draw blue rectangle
-bito8.graphics.drawRectangle(30, 40, 80, 60, {0, 0, 255}, true)</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.image(x, y, data)</h3>
+        <p data-en="Draws an image at (x,y) with current transformations. Data should be a 2D array of color tables." data-ru="Рисует изображение в точке (x,y) с текущими преобразованиями. Данные должны быть 2D массивом таблиц цветов."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.graphics.drawCircle(x, y, radius, color, isFulled)</h3>
-                    <p data-en="Draws a circle at the specified coordinates with the given radius and color." data-ru="Рисует круг по указанным координатам с заданным радиусом и цветом."></p>
-                    <pre><code class="lua">-- Draw red circle
-bito8.graphics.drawCircle(100, 100, 20, {255, 0, 0}, trur)</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.rectangle(x, y, width, height, isFilled)</h3>
+        <p data-en="Draws a rectangle at (x,y) with given dimensions. If isFilled is true, draws a filled rectangle." data-ru="Рисует прямоугольник в точке (x,y) с заданными размерами. Если isFilled=true, рисует закрашенный прямоугольник."></p>
+    </div>
 
-                <div class="api-item">
-                    <h3 class="function-name">bito8.graphics.drawText(x, y, text, color, scale)</h3>
-                    <p data-en="Draws text at the specified coordinates with given color and scale (must be positive integer)." data-ru="Рисует текст по указанным координатам заданным цветом и масштабом (должен быть целым положительным числом)."></p>
-                    <pre><code class="lua">-- Draw white text with 2x scale
-bito8.graphics.drawText(10, 10, "Hello World!", {255, 255, 255}, 2)</code></pre>
-                </div>
+    <div class="api-item">
+        <h3 class="function-name">graphics.fill(x, y, color)</h3>
+        <p data-en="Performs a flood fill starting at (x,y) with specified color." data-ru="Выполняет заливку области начиная с точки (x,y) указанным цветом."></p>
+    </div>
 
-<div class="api-item"> <h3 class="function-name">bito8.graphics.fill(x, y, color)</h3> <p data-en="Performs a flood fill at the specified coordinates with the given color. The fill will replace all adjacent pixels of the same color as the starting pixel." data-ru="Выполняет заливку (flood fill) по указанным координатам заданным цветом. Заливка заменит все смежные пиксели того же цвета, что и начальный пиксель."></p> <pre><code class="lua">-- Fill area starting at (50,50) with red color bito8.graphics.fill(50, 50, {255, 0, 0})
--- Fill area starting at mouse position with current color
-bito8.graphics.fill(love.mouse.getX(), love.mouse.getY(), {255, 255, 0})</code></pre>
-<div class="notes">
-<p data-en="Note: Uses a queue-based algorithm for efficient filling. Works with the current drawing surface." data-ru="Примечание: Использует алгоритм на основе очереди для эффективной заливки. Работает с текущей поверхностью для рисования."></p>
-</div>
-</div>
-            </section>
+    <div class="api-item">
+        <h3 class="function-name">graphics.text(x, y, text)</h3>
+        <p data-en="Draws text at (x,y) using current color and transformations. Supports UTF-8." data-ru="Рисует текст в точке (x,y) текущим цветом с преобразованиями. Поддерживает UTF-8."></p>
+    </div>
+</section>
+
+<section id="example">
+    <h2 data-en="Example" data-ru="Пример"></h2>
+    <pre><code class="lua">
+_G.love = love
+local bito8 = require("bito8")
+
+local player = {
+    x = 100,
+    y = 100,
+    image = nil,
+    angle = 0
+}
+function love.load()
+    player.image = bito8.imageConvertor("player.png")
+end
+
+function love.update(dt)
+    if love.keyboard.isDown("a") or love.keyboard.isDown("left") then
+        player.x = player.x - 60 * dt
+    end
+    if love.keyboard.isDown("d") or love.keyboard.isDown("right") then
+        player.x = player.x + 60 * dt
+    end
+    if love.keyboard.isDown("w") or love.keyboard.isDown("up") then
+        player.y = player.y - 60 * dt
+    end
+    if love.keyboard.isDown("s") or love.keyboard.isDown("down") then
+        player.y = player.y + 60 * dt
+    end
+
+    player.angle = player.angle + 2 * dt
+end
+
+function love.draw()
+    bito8.graphics.clear(0, 0, 0)
+    
+    bito8.graphics.setColor(255, 255, 255)
+    bito8.graphics.scale(1)
+    bito8.graphics.text(10, 10, "FPS: "..love.timer.getFPS())
+    
+    bito8.graphics.push()
+    bito8.graphics.setColor(255, 255, 0)
+    bito8.graphics.scale(2)
+    bito8.graphics.rotate(player.angle)
+    bito8.graphics.image(player.x, player.y, player.image)
+    bito8.graphics.pop()
+    
+    bito8.graphics.push()
+    bito8.graphics.setColor(255, 0, 0)
+    bito8.graphics.rectangle(200, 150, 50, 50, false)
+    bito8.graphics.pop()
+
+    bito8.graphics.fill(210, 160, {0, 255, 0})
+
+    bito8.graphics.setColor(0, 255, 0)
+    bito8.graphics.line(0, 0, 400, 300)
+
+    bito8.graphics.push()
+    bito8.graphics.setColor(255, 255, 255)
+    bito8.graphics.circle(100, 100, 50, true)
+    bito8.graphics.pop()
+
+    bito8.draw()
+end
+    </code></pre>
+</section>
 
             <hr>
 
