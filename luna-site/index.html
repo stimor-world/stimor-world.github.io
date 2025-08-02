@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna - Powerful Lua Server Framework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c5;
+            --secondary: #00cec9;
+            --dark: #2d3436;
+            --light: #f7f9fa;
+            --gray: #636e72;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #ff7675;
+            --code-bg: #1e1f29;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 30px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        header.scrolled {
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 150px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(108, 92, 231, 0.1) 0%, rgba(26, 26, 46, 0) 70%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .highlight {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+            max-width: 600px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 25px rgba(108, 92, 231, 0.6);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(108, 92, 231, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .features {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .section-title p {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(108, 92, 231, 0.1);
+            border-color: rgba(108, 92, 231, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: #d0d0d0;
+        }
+
+        .code-example {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .code-container {
+            background: var(--code-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        
+        .code-header {
+            background: #1a1a1f;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        
+        .code-dots {
+            display: flex;
+            gap: 8px;
+            margin-right: 20px;
+        }
+        
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+        
+        .dot-red {
+            background: var(--danger);
+        }
+        
+        .dot-yellow {
+            background: var(--warning);
+        }
+        
+        .dot-green {
+            background: var(--success);
+        }
+        
+        .code-title {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 16px;
+            color: #aaa;
+        }
+        
+        pre {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .code {
+            padding: 30px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f8f8f2;
+        }
+        
+        .comment {
+            color: #6272a4;
+        }
+        
+        .keyword {
+            color: #ff79c6;
+        }
+        
+        .function {
+            color: #50fa7b;
+        }
+        
+        .string {
+            color: #f1fa8c;
+        }
+        
+        .number {
+            color: #bd93f9;
+        }
+        
+        .variable {
+            color: #8be9fd;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #888;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 206, 201, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 206, 201, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 206, 201, 0);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="logo-text">Luna</div>
+                </div>
+                <nav class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#code">Code Example</a>
+                    <a href="install.html">Installation</a>
+                    <a href="docs.html">Documentation</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Build powerful servers in <span class="highlight">Lua</span> with the <span class="highlight">Luna</span> framework</h1>
+                    <p>Luna is a modern framework for creating high-performance servers in Lua (5.1/LuaJIT) with a simple and elegant API. The Lunac client provides convenient server interaction. Open source - Luna is released under the MIT license.</p>
+                    <div class="cta-buttons">
+                        <a href="install.html" class="btn btn-primary">Get Started</a>
+                        <a href="docs.html" class="btn btn-secondary">Documentation</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div style="font-size: 150px; color: var(--secondary);">
+                        <i class="fas fa-code pulse" style="border-radius: 50%; padding: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>Luna provides all the necessary tools for creating modern server applications in Lua</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>High Performance</h3>
+                    <p>Optimized code for Lua 5.1 and LuaJIT delivers maximum request processing speed up to 20,000 requests per second.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Easy Interaction</h3>
+                    <p>The Lunac client allows easy server connection and request sending with minimal code.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Built-in Security</h3>
+                    <p>Automatic request parameter validation and DDoS protection.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Flexible Routing</h3>
+                    <p>Powerful routing system with support for prefixes and nested routers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Asynchronous Operations</h3>
+                    <p>Support for asynchronous requests via noawait_fetch and synchronous via fetch.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Easy Integration</h3>
+                    <p>Easily integrates with popular frameworks including LÖVE, Solar2d.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="code-example" id="code">
+        <div class="container">
+            <div class="section-title">
+                <h2>Code Example</h2>
+                <p>A simple server and client written using Luna and Lunac</p>
+            </div>
+            <div class="code-container">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <div class="dot dot-red"></div>
+                        <div class="dot dot-yellow"></div>
+                        <div class="dot dot-green"></div>
+                    </div>
+                    <div class="code-title">love_example.lua</div>
+                </div>
+                <pre><code class="code">
+<span class="comment">-- Initializing Luna server and Lunac client</span>
+<span class="keyword">local</span> luna, lunac
+
+<span class="keyword">function</span> <span class="function">love.load</span>()
+    <span class="comment">-- Loading server library</span>
+    luna = require(<span class="string">"luna"</span>)
+
+    <span class="comment">-- Creating a new server application</span>
+    <span class="keyword">local</span> app = luna.new_app({
+        host = <span class="string">"127.0.0.1"</span>,
+        port = <span class="number">8081</span>,
+        name = <span class="string">"test server"</span>,
+        max_ip_connected = <span class="number">20</span>,
+        no_errors = <span class="keyword">true</span>,
+    })
+
+    <span class="comment">-- Creating main router with 'api' prefix</span>
+    <span class="keyword">local</span> main_router = app:new_router({
+        prefix = <span class="string">"api"</span>,
+    })
+
+    <span class="comment">-- Creating /api/echo endpoint</span>
+    main_router:new({
+        validate = {text = {<span class="string">"string"</span>,<span class="string">"nil"</span>}},
+        responce_validate = {<span class="string">"string"</span>},
+        prefix = <span class="string">"echo"</span>, 
+        fun = <span class="keyword">function</span>(args, client)
+            <span class="keyword">return</span> args.text <span class="keyword">or</span> <span class="string">"no text provided"</span>
+        <span class="keyword">end</span>
+    })
+
+    <span class="comment">-- Loading client library</span>
+    lunac = require(<span class="string">"lunac"</span>)
+    _G.client = lunac.connect_to_app({
+        host = <span class="string">"127.0.0.1"</span>,
+        port = <span class="number">8081</span>,
+        name = <span class="string">"test server"</span>,
+        no_errors = <span class="keyword">true</span>,
+        server = luna,
+        listener = <span class="keyword">function</span> (message)
+            print(<span class="string">"New message client:send     "</span>, message)
+        <span class="keyword">end</span>
+    })
+
+    <span class="comment">-- Asynchronous request</span>
+    client:noawait_fetch(<span class="string">"api/echo"</span>, {text = <span class="string">"hello world"</span>})
+    
+    <span class="comment">-- Synchronous request</span>
+    <span class="keyword">local</span> response = client:fetch(<span class="string">"api/echo"</span>, {text = <span class="string">"hello world"</span>})
+    print(<span class="string">"Echo data: "</span>..response)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> <span class="function">love.update</span>(dt)
+    <span class="comment">-- Updating server and client</span>
+    luna.update(dt)
+    lunac.update(dt)
+<span class="keyword">end</span></code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Luna</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#code">Examples</a></li>
+                        <li><a href="docs.html">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/Max-Dil/luna">GitHub</a></li>
+                        <li><a href="install.html">Installation</a></li>
+                        <!-- <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="docs.html">Documentation</a></li>
+                        <li><a href="https://t.me/stimor_top">Report a Bug</a></li>
+                        <li><a href="https://t.me/ProLua">Forum</a></li>
+                        <!-- <li><a href="#">Contact</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/Max-Dil/luna"><i class="fab fa-github"></i> GitHub</a></li>
+                        <!-- <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Luna Framework. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

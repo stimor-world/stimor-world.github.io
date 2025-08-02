@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna Framework - Установка</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c5;
+            --secondary: #00cec9;
+            --dark: #2d3436;
+            --light: #f7f9fa;
+            --gray: #636e72;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #ff7675;
+            --code-bg: #1e1f29;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --sidebar-width: 280px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar-header {
+            padding: 0 30px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .sidebar-menu {
+            padding: 30px 0;
+        }
+        
+        .menu-category {
+            margin-bottom: 30px;
+        }
+        
+        .menu-category h3 {
+            padding: 0 30px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .menu-links {
+            list-style: none;
+        }
+        
+        .menu-links li {
+            margin-bottom: 5px;
+        }
+        
+        .menu-links a {
+            display: block;
+            padding: 10px 30px;
+            color: #d0d0d0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .menu-links a:hover {
+            color: var(--secondary);
+            background: rgba(108, 92, 231, 0.1);
+        }
+        
+        .menu-links a.active {
+            color: var(--secondary);
+            background: rgba(108, 92, 231, 0.2);
+        }
+        
+        .menu-links a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--secondary);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 50px;
+        }
+        
+        .doc-header {
+            margin-bottom: 50px;
+        }
+        
+        .doc-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .doc-header p {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+
+        .doc-section {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+        }
+        
+        .doc-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .doc-section h2 i {
+            font-size: 1.5rem;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 30px;
+        }
+        
+        .step-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-right: 20px;
+            min-width: 40px;
+            height: 40px;
+            background: rgba(0, 206, 201, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .step-content p {
+            margin-bottom: 15px;
+            color: #d0d0d0;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border-radius: 10px;
+            padding: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        code {
+            font-family: 'Roboto Mono', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .command {
+            display: flex;
+            align-items: center;
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin: 15px 0;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .command-prefix {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 25px rgba(108, 92, 231, 0.6);
+        }
+        
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #333;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .github-btn:hover {
+            background: #444;
+            transform: translateY(-3px);
+        }
+        
+        .file-structure {
+            background: var(--code-bg);
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Roboto Mono', monospace;
+            margin: 20px 0;
+        }
+        
+        .file-item {
+            margin-left: 20px;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .file-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .file-item.folder::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300cec9'%3E%3Cpath d='M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z'/%3E%3C/svg%3E");
+        }
+        
+        .file-item.file::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236c5ce7'%3E%3Cpath d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/%3E%3C/svg%3E");
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                padding: 20px 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .doc-header h1 {
+                font-size: 2rem;
+            }
+            
+            .doc-section {
+                padding: 20px;
+            }
+            
+            .doc-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="logo-text">Luna</div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-category">
+                    <h3>Navigation</h3>
+                    <ul class="menu-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="docs.html">Documentation</a></li>
+                        <!-- <li><a href="examples.html">Examples</a></li> -->
+                    </ul>
+                </div>
+                <div class="menu-category">
+                    <h3>Resources</h3>
+                    <ul class="menu-links">
+                        <li><a href="https://github.com/Max-Dil/luna" target="_blank">GitHub</a></li>
+                        <!-- <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li> -->
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="doc-header">
+                <h1>Installing Luna Framework</h1>
+                <p>Simple guide for installing the Luna server library and Lunac client library in your project</p>
+            </div>
+
+            <div class="doc-section">
+                <h2><i class="fas fa-download"></i> Downloading the Library</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Visit the GitHub repository</h3>
+                        <p>The Luna library is hosted on GitHub. You need to download the <code>luna</code> and <code>lunac</code> folders from the repository.</p>
+                        <a href="https://github.com/Max-Dil/luna" class="github-btn" target="_blank">
+                            <i class="fab fa-github"></i> Open Repository
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Download the library</h3>
+                        <p>You can download the library using one of these methods:</p>
+                        
+                        <h4>Option 1: Via Git</h4>
+                        <div class="command">
+                            <span class="command-prefix">$</span>
+                            git clone https://github.com/Max-Dil/luna.git
+                        </div>
+                        
+                        <h4>Option 2: Download ZIP archive</h4>
+                        <p>Click the "Code" button on GitHub, then "Download ZIP" and extract the archive.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Locate the required folders</h3>
+                        <p>After downloading, find these folders in the repository:</p>
+                        
+                        <div class="file-structure">
+                            <div class="file-item folder">luna
+                                <div class="file-item file">init.lua</div>
+                                <div class="file-item file">... and other files</div>
+                            </div>
+                            <div class="file-item folder">lunac
+                                <div class="file-item file">init.lua</div>
+                                <div class="file-item file">... and other files</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2><i class="fas fa-cog"></i> Project Integration</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Copy folders to your project</h3>
+                        <p>Move the <code>luna</code> and <code>lunac</code> folders to your project root or to a libraries folder.</p>
+                        
+                        <p>Recommended project structure:</p>
+                        <div class="file-structure">
+                            <div class="file-item folder">your_project
+                                <div class="file-item folder">luna</div>
+                                <div class="file-item folder">lunac</div>
+                                <div class="file-item folder">src
+                                    <div class="file-item file">main.lua</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Include libraries in your code</h3>
+                        <p>To use the libraries in your project, require them:</p>
+                        
+                        <pre><code><span class="comment">-- Include server part</span>
+<span class="keyword">local</span> luna = require(<span class="string">"luna"</span>)
+
+<span class="comment">-- Include client part</span>
+<span class="keyword">local</span> lunac = require(<span class="string">"lunac"</span>)</code></pre>
+                        
+                        <p>If you placed libraries in a subfolder (e.g., <code>libs/luna</code>), use:</p>
+                        <pre><code><span class="keyword">local</span> luna = require(<span class="string">"libs.luna"</span>)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Test the setup</h3>
+                        <p>Create a simple application to test the library:</p>
+                        
+                        <pre><code><span class="keyword">local</span> luna = require(<span class="string">"luna"</span>)
+
+<span class="keyword">local</span> app = luna.new_app({
+    name = <span class="string">"Test Server"</span>,
+    max_ip_connected = <span class="number">20</span>,
+    host = <span class="string">"127.0.0.1"</span>,
+    port = <span class="number">8080</span>
+})
+
+print(<span class="string">"Server running on port 8080"</span>)</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2><i class="fas fa-check-circle"></i> Requirements</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Lua Version</h3>
+                        <p>Luna Framework works with these Lua versions:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px; color: #d0d0d0;">
+                            <li>Lua 5.1</li>
+                            <li>LuaJIT (recommended for better performance)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Dependencies</h3>
+                        <p>Luna Framework requires:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px; color: #d0d0d0;">
+                            <li>LuaSocket (usually included in standard Lua libraries)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2><i class="fas fa-arrow-right"></i> What's Next?</h2>
+                <p>Now that you've installed Luna Framework, you can:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <a href="docs.html" class="btn btn-primary" style="text-align: center;">
+                        <i class="fas fa-book"></i> Read Documentation
+                    </a>
+                    <!-- <a href="examples.html" class="btn btn-primary" style="text-align: center;">
+                        <i class="fas fa-code"></i> View Examples
+                    </a> -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.querySelectorAll('.menu-links a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

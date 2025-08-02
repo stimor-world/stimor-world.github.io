@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna Framework - Документация</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c5;
+            --secondary: #00cec9;
+            --dark: #2d3436;
+            --light: #f7f9fa;
+            --gray: #636e72;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #ff7675;
+            --code-bg: #1e1f29;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --sidebar-width: 280px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar-header {
+            padding: 0 30px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .sidebar-menu {
+            padding: 30px 0;
+        }
+        
+        .menu-category {
+            margin-bottom: 30px;
+        }
+        
+        .menu-category h3 {
+            padding: 0 30px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .menu-links {
+            list-style: none;
+        }
+        
+        .menu-links li {
+            margin-bottom: 5px;
+        }
+        
+        .menu-links a {
+            display: block;
+            padding: 10px 30px;
+            color: #d0d0d0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .menu-links a:hover {
+            color: var(--secondary);
+            background: rgba(108, 92, 231, 0.1);
+        }
+        
+        .menu-links a.active {
+            color: var(--secondary);
+            background: rgba(108, 92, 231, 0.2);
+        }
+        
+        .menu-links a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--secondary);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 50px;
+        }
+        
+        .doc-header {
+            margin-bottom: 50px;
+        }
+        
+        .doc-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .doc-header p {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+
+        .doc-section {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+        }
+        
+        .doc-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .doc-section h2 i {
+            font-size: 1.5rem;
+        }
+        
+        .doc-section h3 {
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+            color: var(--light);
+        }
+        
+        .doc-section p {
+            margin-bottom: 15px;
+            color: #d0d0d0;
+        }
+        
+        .method {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .method-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .method-name {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .method-returns {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--warning);
+            font-size: 0.9rem;
+            background: rgba(253, 203, 110, 0.1);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+        
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .param-table th, .param-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .param-table th {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        .param-table td {
+            color: #d0d0d0;
+        }
+        
+        .param-type {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--warning);
+            background: rgba(253, 203, 110, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .param-required {
+            color: var(--danger);
+            font-weight: 500;
+        }
+        
+        .param-optional {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border-radius: 10px;
+            padding: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        code {
+            font-family: 'Roboto Mono', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .comment {
+            color: #6272a4;
+        }
+        
+        .keyword {
+            color: #ff79c6;
+        }
+        
+        .function {
+            color: #50fa7b;
+        }
+        
+        .string {
+            color: #f1fa8c;
+        }
+        
+        .number {
+            color: #bd93f9;
+        }
+        
+        .variable {
+            color: #8be9fd;
+        }
+
+        #install {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: rgba(108, 92, 231, 0.7);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        #install:hover {
+            background-color: rgba(108, 92, 231, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        #install::after {
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                padding: 20px 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .doc-header h1 {
+                font-size: 2rem;
+            }
+            
+            .doc-section {
+                padding: 20px;
+            }
+            
+            .doc-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="logo-text">Luna</div>
+                </div>
+                <div class="search-box">                
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search documentation...">
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-category">
+                    <h3>Basics</h3>
+                    <ul class="menu-links">
+                        <li><a href="#intro" class="active">Introduction</a></li>
+                        <li><a href="#install">Installation</a></li>
+                    </ul>
+                </div>
+                <div class="menu-category">
+                    <h3>Luna (Server)</h3>
+                    <ul class="menu-links">
+                        <li><a href="#luna-core">Core Methods</a></li>
+                        <li><a href="#luna-app">Application (App)</a></li>
+                        <li><a href="#luna-router">Router</a></li>
+                    </ul>
+                </div>
+                <div class="menu-category">
+                    <h3>Lunac (Client)</h3>
+                    <ul class="menu-links">
+                        <li><a href="#lunac-core">Core Methods</a></li>
+                        <li><a href="#lunac-app">Connecting to App</a></li>
+                        <li><a href="#lunac-close-app">Disconect App</a></li>
+                        <li><a href="#lunac-methods">Request Methods</a></li>
+                    </ul>
+                </div>
+                <!-- <div class="menu-category">
+                    <h3>Additional</h3>
+                    <ul class="menu-links">
+                        <li><a href="#examples">Examples</a></li>
+                        <li><a href="#best-practices">Best Practices</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div> -->
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="doc-header" id="intro">
+                <h1>Luna Framework Documentation</h1>
+                <p>Complete guide for using the Luna server library and Lunac client library for creating network applications in Lua (5.1/LuaJIT).</p>
+            </div>
+
+            <div class="doc-section" id="luna-core">
+                <h2><i class="fas fa-server"></i> Luna - Server Side</h2>
+                <p>Core methods for working with the Luna server.</p>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">luna.update(dt)</div>
+                    </div>
+                    <p>Updates server state. Should be called in the main application loop.</p>
+                    <pre><code><span class="keyword">function</span> <span class="function">love.update</span>(dt)
+    luna.update(dt)
+<span class="keyword">end</span></code></pre>
+                </div>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">luna.new_app(config)</div>
+                        <div class="method-returns">app_data</div>
+                    </div>
+                    <p>Creates a new server application.</p>
+                    
+                    <h3>Configuration Parameters:</h3>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>name</td>
+                                <td><span class="param-type">string</span></td>
+                                <td><span class="param-required">Yes</span></td>
+                                <td>Application name (for debugging)</td>
+                            </tr>
+                            <tr>
+                                <td>max_ip_connected</td>
+                                <td><span class="param-type">number</span></td>
+                                <td><span class="param-required">Yes</span></td>
+                                <td>Maximum connections from a single IP</td>
+                            </tr>
+                            <tr>
+                                <td>error_handler</td>
+                                <td><span class="param-type">function</span></td>
+                                <td><span class="param-optional">No</span></td>
+                                <td>Function for error handling</td>
+                            </tr>
+                            <tr>
+                                <td>no_errors</td>
+                                <td><span class="param-type">boolean</span></td>
+                                <td><span class="param-optional">No</span></td>
+                                <td>If false, errors will stop the server. If true, errors will be passed to error_handler</td>
+                            </tr>
+                            <tr>
+                                <td>host</td>
+                                <td><span class="param-type">string</span></td>
+                                <td><span class="param-required">Yes</span></td>
+                                <td>Host to run server on (e.g. "127.0.0.1")</td>
+                            </tr>
+                            <tr>
+                                <td>port</td>
+                                <td><span class="param-type">number</span></td>
+                                <td><span class="param-required">Yes</span></td>
+                                <td>Port to run server on (e.g. 8080)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>Example:</h3>
+                    <pre><code><span class="keyword">local</span> app = luna.new_app({
+    name = <span class="string">"My Server"</span>,
+    max_ip_connected = <span class="number">20</span>,
+    error_handler = <span class="keyword">function</span>(err)
+        print(<span class="string">"Server error:"</span>, err)
+    <span class="keyword">end</span>,
+    no_errors = <span class="keyword">true</span>,
+    host = <span class="string">"127.0.0.1"</span>,
+    port = <span class="number">8080</span>
+})</code></pre>
+                </div>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">luna.remove_app(app)</div>
+                    </div>
+                    <p>Removes a server application. Accepts either the app_data object returned by new_app, or the application name.</p>
+                    <pre><code>luna.remove_app(<span class="string">"My Server"</span>)
+<span class="comment">-- or</span>
+luna.remove_app(app)</code></pre>
+                </div>
+            </div>
+
+            <div class="doc-section" id="luna-app">
+                <h2><i class="fas fa-cube"></i> Application (App)</h2>
+                <p>Methods for working with server applications.</p>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">app:get_clients()</div>
+                        <div class="method-returns">table</div>
+                    </div>
+                    <p>Returns a table of all connected clients.</p>
+                    <pre><code><span class="keyword">local</span> clients = app:get_clients()</code></pre>
+                </div>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">app:new_router(config)</div>
+                        <div class="method-returns">router_data</div>
+                    </div>
+                    <p>Creates a new router for request handling.</p>
+                    
+                    <h3>Configuration Parameters:</h3>
+                    <table class="param-table">
+                        <tr>
+                            <td>prefix</td>
+                            <td><span class="param-type">string</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Prefix for all routes in this router</td>
+                        </tr>
+                        <tr>
+                            <td>no_errors</td>
+                            <td><span class="param-type">boolean</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Overrides global no_errors setting for this router</td>
+                        </tr>
+                        <tr>
+                            <td>error_handler</td>
+                            <td><span class="param-type">function</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Error handling function for this router</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Example:</h3>
+                    <pre><code><span class="keyword">local</span> api_router = app:new_router({
+    prefix = <span class="string">"api"</span>,
+    no_errors = <span class="keyword">true</span>
+})</code></pre>
+                </div>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">app:remove_router(router)</div>
+                    </div>
+                    <p>Removes a router. Accepts either the router_data object or the router prefix.</p>
+                    <pre><code>app:remove_router(<span class="string">"api"</span>)
+<span class="comment">-- or</span>
+app:remove_router(api_router)</code></pre>
+                </div>
+            </div>
+
+            <div class="doc-section" id="luna-router">
+                <h2><i class="fas fa-route"></i> Router</h2>
+                <p>Methods for working with routers and request handling.</p>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">router:new(config)</div>
+                        <div class="method-returns">req_data</div>
+                    </div>
+                    <p>Creates a new request handler.</p>
+                    
+                    <h3>Configuration Parameters:</h3>
+                    <table class="param-table">
+                        <tr>
+                            <td>prefix</td>
+                            <td><span class="param-type">string</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Request prefix (added to router prefix)</td>
+                        </tr>
+                        <tr>
+                            <td>fun</td>
+                            <td><span class="param-type">function</span></td>
+                            <td><span class="param-required">Yes</span></td>
+                            <td>Handler function: fun(args, client)</td>
+                        </tr>
+                        <tr>
+                            <td>no_errors</td>
+                            <td><span class="param-type">boolean</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Overrides no_errors settings for this request</td>
+                        </tr>
+                        <tr>
+                            <td>error_handler</td>
+                            <td><span class="param-type">function</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Error handling function for this request</td>
+                        </tr>
+                        <tr>
+                            <td>validate</td>
+                            <td><span class="param-type">table</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Parameter validation: {["param"] = {"type1", "type2"}}</td>
+                        </tr>
+                        <tr>
+                            <td>responce_validate</td>
+                            <td><span class="param-type">table</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Response validation: {"type1", "type2"}</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Example:</h3>
+                    <pre><code>api_router:new({
+    prefix = <span class="string">"echo"</span>,
+    validate = {text = {<span class="string">"string"</span>, <span class="string">"nil"</span>}},
+    responce_validate = {<span class="string">"string"</span>},
+    fun = <span class="keyword">function</span>(args, client)
+        <span class="keyword">return</span> args.text <span class="keyword">or</span> <span class="string">"no text provided"</span>
+    <span class="keyword">end</span>
+})</code></pre>
+                </div>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">router:remove(req)</div>
+                    </div>
+                    <p>Removes a request handler. Accepts either the req_data object or the request prefix.</p>
+                    <pre><code>api_router:remove(<span class="string">"echo"</span>)
+<span class="comment">-- or</span>
+api_router:remove(echo_handler)</code></pre>
+                </div>
+            </div>
+
+            <div class="doc-section" id="lunac-core">
+                <h2><i class="fas fa-desktop"></i> Lunac - Client Side</h2>
+                <p>Core methods for working with the Lunac client.</p>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">lunac.update(dt)</div>
+                    </div>
+                    <p>Updates client state. Should be called in the main application loop.</p>
+                    <pre><code><span class="keyword">function</span> <span class="function">love.update</span>(dt)
+    lunac.update(dt)
+<span class="keyword">end</span></code></pre>
+                </div>
+                
+                <div class="method" id="lunac-close-app">
+                    <div class="method-header">
+                        <div class="method-name">lunac.disconnect_to_app(app_data or "app_name")</div>
+                    </div>
+                    <p>Disconnects from a server application. Accepts either the app_data object or the application name.</p>
+                    <pre><code>lunac.disconnect_to_app(<span class="string">"My Client"</span>)
+<span class="comment">-- or</span>
+lunac.disconnect_to_app(client)</code></pre>
+                </div>
+                
+                <div class="method" id="lunac-app">
+                    <div class="method-header">
+                        <div class="method-name">lunac.connect_to_app(config)</div>
+                        <div class="method-returns">app_data</div>
+                    </div>
+                    <p>Connects to a server application.</p>
+                    
+                    <h3>Configuration Parameters:</h3>
+                    <table class="param-table">
+                        <tr>
+                            <td>name</td>
+                            <td><span class="param-type">string</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Application name (for debugging)</td>
+                        </tr>
+                        <tr>
+                            <td>host</td>
+                            <td><span class="param-type">string</span></td>
+                            <td><span class="param-required">Yes</span></td>
+                            <td>Server host (e.g. "127.0.0.1")</td>
+                        </tr>
+                        <tr>
+                            <td>port</td>
+                            <td><span class="param-type">number</span></td>
+                            <td><span class="param-required">Yes</span></td>
+                            <td>Server port (e.g. 8080)</td>
+                        </tr>
+                        <tr>
+                            <td>no_errors</td>
+                            <td><span class="param-type">boolean</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>If true, errors won't stop the client</td>
+                        </tr>
+                        <tr>
+                            <td>error_handler</td>
+                            <td><span class="param-type">function</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Function for error handling</td>
+                        </tr>
+                        <tr>
+                            <td>listener</td>
+                            <td><span class="param-type">function</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Function to handle messages from client:send</td>
+                        </tr>
+                        <tr>
+                            <td>server</td>
+                            <td><span class="param-type">table</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Luna object (if client and server are in the same app)</td>
+                        </tr>
+                        <tr>
+                            <td>reconnect_time</td>
+                            <td><span class="param-type">number</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Reconnection time in seconds (if connection is lost)</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Example:</h3>
+                    <pre><code><span class="keyword">local</span> client = lunac.connect_to_app({
+    name = <span class="string">"My Client"</span>,
+    host = <span class="string">"127.0.0.1"</span>,
+    port = <span class="number">8080</span>,
+    no_errors = <span class="keyword">true</span>,
+    reconnect_time = <span class="number">5</span>, <span class="comment">-- will attempt to reconnect every 5 seconds if disconnected</span>
+    listener = <span class="keyword">function</span>(message)
+        print(<span class="string">"Received message:"</span>, message)
+    <span class="keyword">end</span>,
+    server = luna <span class="comment">-- only if server is in the same application</span>
+})</code></pre>
+                </div>
+            </div>
+
+            <div class="doc-section" id="lunac-methods">
+                <h2><i class="fas fa-exchange-alt"></i> Request Methods</h2>
+                <p>Methods for interacting with the server.</p>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">app:fetch(path, args, timeout)</div>
+                        <div class="method-returns">response</div>
+                    </div>
+                    <p>Sends a request to the server and waits for response.</p>
+                    
+                    <h3>Parameters:</h3>
+                    <table class="param-table">
+                        <tr>
+                            <td>path</td>
+                            <td><span class="param-type">string</span></td>
+                            <td><span class="param-required">Yes</span></td>
+                            <td>Request path (router_prefix/request_prefix)</td>
+                        </tr>
+                        <tr>
+                            <td>args</td>
+                            <td><span class="param-type">table</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Request parameters</td>
+                        </tr>
+                        <tr>
+                            <td>timeout</td>
+                            <td><span class="param-type">number</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Response timeout (default 5 seconds)</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Example:</h3>
+                    <pre><code><span class="keyword">local</span> response = client:fetch(<span class="string">"api/echo"</span>, {text = <span class="string">"Hello"</span>}, <span class="number">3</span>)
+print(response) <span class="comment">-- "Hello"</span></code></pre>
+                </div>
+                
+                <div class="method">
+                    <div class="method-header">
+                        <div class="method-name">app:noawait_fetch(path, args)</div>
+                    </div>
+                    <p>Sends a request to the server without waiting for response.</p>
+                    
+                    <h3>Parameters:</h3>
+                    <table class="param-table">
+                        <tr>
+                            <td>path</td>
+                            <td><span class="param-type">string</span></td>
+                            <td><span class="param-required">Yes</span></td>
+                            <td>Request path (router_prefix/request_prefix)</td>
+                        </tr>
+                        <tr>
+                            <td>args</td>
+                            <td><span class="param-type">table</span></td>
+                            <td><span class="param-optional">No</span></td>
+                            <td>Request parameters</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Example:</h3>
+                    <pre><code>client:noawait_fetch(<span class="string">"api/log"</span>, {message = <span class="string">"Debug info"</span>})</code></pre>
+                </div>
+            </div>
+
+            <a id="install" href="install.html">Install Luna Framework</a>
+        </main>
+    </div>
+
+    <script>
+        document.querySelectorAll('.menu-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                document.querySelectorAll('.menu-links a').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                this.classList.add('active');
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.doc-section');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    currentSection = '#' + section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.menu-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+    const searchInput = document.getElementById('search-input');
+    const menuLinks = document.querySelectorAll('.menu-links li');
+    const docSections = document.querySelectorAll('.doc-section');
+        
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        
+        if (searchTerm === '') {
+            menuLinks.forEach(link => link.style.display = '');
+            docSections.forEach(section => section.style.display = '');
+            return;
+        }
+    
+        menuLinks.forEach(link => link.style.display = 'none');
+        docSections.forEach(section => section.style.display = 'none');
+    
+        docSections.forEach(section => {
+            const sectionText = section.textContent.toLowerCase();
+            const sectionTitle = section.querySelector('h2').textContent.toLowerCase();
+            
+            if (sectionText.includes(searchTerm) || sectionTitle.includes(searchTerm)) {
+                section.style.display = '';
+            
+                const sectionId = section.getAttribute('id');
+                document.querySelectorAll(`.menu-links a[href="#${sectionId}"]`).forEach(link => {
+                    link.closest('li').style.display = '';
+                });
+            }
+        });
+    
+        menuLinks.forEach(link => {
+            const linkText = link.textContent.toLowerCase();
+            if (linkText.includes(searchTerm)) {
+                link.style.display = '';
+            
+                const href = link.querySelector('a').getAttribute('href');
+                if (href.startsWith('#')) {
+                    document.querySelector(href).style.display = '';
+                }
+            }
+        });
+    });
+    
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const searchTerm = this.value.toLowerCase().trim();
+            if (searchTerm) {
+                const firstVisibleSection = document.querySelector('.doc-section[style=""]');
+                if (firstVisibleSection) {
+                    firstVisibleSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    });
+    </script>
+</body>
+</html>
